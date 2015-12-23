@@ -9,3 +9,6 @@ cover a given distance. For example, a distance of 3 inches can be covered in th
 step-step-step, step-jump, and jump-step.
   
 Please use "mvn clean package" to build runnable jar.
+This will create a file in the target directory named "AerionChallenge.jar".
+
+To run, use the command java -jar AerionChallenge.jar [integer input].

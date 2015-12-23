@@ -28,9 +28,13 @@ public class App {
     public static void main(String[] args) {
 //    	//TODO CHANGE POM TO Java 1.8
 //    	// This is to be the user's input
-        int N = Integer.parseInt("3");
+        int N = Integer.parseInt(args[0]);
         
     	calculateJumpCombinations(N);
+    	
+    	for(String str:permsSet) {
+    		System.out.println(str);
+    	}
     	
         System.out.println("The number of different combinations the toad can use to cover a distance of " + N  + " inches: " + permsSet.size());
     	System.out.println("\nBuilt with JDK Version: " + System.getProperty("java.version"));
