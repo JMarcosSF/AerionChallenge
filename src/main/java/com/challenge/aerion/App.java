@@ -17,6 +17,8 @@ import java.util.Set;
  * step-step-step, step-jump, and jump-step.
  * 
  * Please use "mvn clean package" to build runnable jar.
+ * This will create a file in the target directory named "AerionChallenge.jar".
+ * To run, use the command java -jar AerionChallenge.jar [integer input].
  * 
  * @author jmarcos
  *
@@ -26,17 +28,17 @@ public class App {
 	static Set<String> permsSet = new HashSet<String>();
 
     public static void main(String[] args) {
-//    	//TODO CHANGE POM TO Java 1.8
-//    	// This is to be the user's input
+
         int N = Integer.parseInt(args[0]);
+        int combinations = 0;
         
     	calculateJumpCombinations(N);
-    	
-    	for(String str:permsSet) {
-    		System.out.println(str);
+
+    	if(N > 0) {
+    		combinations = permsSet.size();
     	}
     	
-        System.out.println("The number of different combinations the toad can use to cover a distance of " + N  + " inches: " + permsSet.size());
+        System.out.println("The number of different combinations the toad can use to cover a distance of " + N  + " inches: " + combinations);
     	System.out.println("\nBuilt with JDK Version: " + System.getProperty("java.version"));
     }
     
@@ -46,7 +48,8 @@ public class App {
     	}
     }
     
-    private static List<String> generateInitialAddendList(final int targetSum) {
+    // Generates initial data to begin permutation calculation.
+    static List<String> generateInitialAddendList(final int targetSum) {
     	List<String> list = new ArrayList<String>();
     	String curr = generateInitialAddends(targetSum);
     	int loc = curr.length() - 1;
@@ -63,10 +66,10 @@ public class App {
     	return list;
     }
     
+    // Set initial data to find permutations
     private static String generateInitialAddends(final int targetSum) {
     	StringBuilder sb = new StringBuilder();
     	if(targetSum % 2 == 0) {
-			  // Set initial data to find permutations
 			  for(int i = 0; i < (targetSum/2); i++) {
 				  sb.append(2);
 			  }
@@ -84,10 +87,14 @@ public class App {
     	return sb.replace(loc, loc+1, "11").toString();
     }
     
-    public  static void calculatePermutation(String s) { 
+    // Calculates all permutations of each given addend from the generated list.
+    public static void calculatePermutation(String s) { 
     	permHelper("", s); 
     }
     
+    // Recursively produce permutations for given String and 
+    // add to HashSet. Size of HashSet distinguishes total number of jump
+    // combinations.
     private static void permHelper(String prefix, String s) {
         int N = s.length();
         if (N == 0) {
