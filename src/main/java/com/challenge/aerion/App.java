@@ -89,19 +89,19 @@ public class App {
     
     // Calculates all permutations of each given addend from the generated list.
     public static void calculatePermutation(String s) { 
-    	permHelper("", s); 
+    	permutation("", s); 
     }
     
     // Recursively produce permutations for given String and 
     // add to HashSet. Size of HashSet distinguishes total number of jump
     // combinations.
-    private static void permHelper(String prefix, String s) {
+    private static void permutation(String prefix, String s) {
         int N = s.length();
         if (N == 0) {
         	permsSet.add(prefix);
         } else {
             for (int i = 0; i < N; i++)
-            	permHelper(prefix + s.charAt(i), s.substring(0, i) + s.substring(i+1, N));
+            	permutation(prefix + s.charAt(i), s.substring(0, i) + s.substring(i+1));
         }
 
     }
