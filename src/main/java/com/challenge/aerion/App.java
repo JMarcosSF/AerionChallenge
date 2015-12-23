@@ -29,7 +29,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        int N = Integer.parseInt(args[0]);
+        int N = Integer.parseInt("11");
         int combinations = 0;
         
     	calculateJumpCombinations(N);
@@ -65,6 +65,11 @@ public class App {
 
     	return list;
     }
+
+    private static String sumListHelper(final int loc, final String addends) {
+    	StringBuilder sb = new StringBuilder(addends);
+    	return sb.replace(loc, loc+1, "11").toString();
+    }
     
     // Set initial data to find permutations
     private static String generateInitialAddends(final int targetSum) {
@@ -80,11 +85,6 @@ public class App {
 			}
 			return sb.toString() + "1";
     	}
-    }
-    
-    private static String sumListHelper(final int loc, final String addends) {
-    	StringBuilder sb = new StringBuilder(addends);
-    	return sb.replace(loc, loc+1, "11").toString();
     }
     
     // Calculates all permutations of each given addend from the generated list.
