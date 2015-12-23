@@ -29,7 +29,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        int N = Integer.parseInt("11");
+        int N = Integer.parseInt(args[0]);
         int combinations = 0;
         
     	calculateJumpCombinations(N);
