@@ -41,9 +41,12 @@ extends TestCase
 		N = -10;
 		assertTrue(testInput(N));
 		
-		System.out.println("Running unit tests on recursive method.");
+		System.out.println("Running unit tests on recursive method. Should take under a minute.");
 		int testRounds = 45;
-		for(int i = 1; i <= testRounds; i++) {			
+		for(int i = 1; i <= testRounds; i++) {
+			if(i % 10 == 0) {
+				System.out.println(".");
+			}
 			N = i;
 			assertTrue(testInput(N));
 		}
