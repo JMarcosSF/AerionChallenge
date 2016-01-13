@@ -1,8 +1,10 @@
 package com.challenge.aerion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,86 +26,63 @@ import java.util.Set;
  *
  */
 public class App {
-	
-	static Set<String> permsSet = new HashSet<String>();
 
     public static void main(String[] args) {
 
         int N = Integer.parseInt(args[0]);
-        int combinations = 0;
-        
-    	calculateJumpCombinations(N);
+        long combinations = 0;
 
-    	if(N > 0) {
-    		combinations = permsSet.size();
-    	}
+        if(N < 0) {
+        	System.out.println("Please enter a positive integer.");
+        	return;
+        }
+        
+        combinations = calculateJumpCombinations(N);
+        
     	
-        System.out.println("The number of different combinations the toad can use to cover a distance of " + N  + " inches: " + combinations);
+        System.out.println("\nThe number of different combinations the toad can use to cover a distance of " + N  + " inches: " + combinations);
     	System.out.println("\nBuilt with JDK Version: " + System.getProperty("java.version"));
     }
     
-    private static void calculateJumpCombinations(final int distance) {
-    	for(String str :generateInitialAddendList(distance)) {
-    		calculatePermutation(str);
-    	}
-    }
-    
-    // Generates initial data to begin permutation calculation.
-    static List<String> generateInitialAddendList(final int targetSum) {
-    	List<String> list = new ArrayList<String>();
-    	String curr = generateInitialAddends(targetSum);
-    	int loc = curr.length() - 1;
-    	if(curr.endsWith("1")) {
-    		loc = loc - 1;
-    	}
-    	list.add(curr);
-    	while(curr.contains("2")) {
-    		curr = sumListHelper(loc, curr);
-    		list.add(curr);
-    		loc--;
-    	}
-
-    	return list;
+    private static Map<Long, Long> map = new HashMap<Long, Long>();
+    // Initialize init data in map
+    static {
+        map.put(1l, 1l);
+        map.put(2l, 2l);
     }
 
-    private static String sumListHelper(final int loc, final String addends) {
-    	StringBuilder sb = new StringBuilder(addends);
-    	return sb.replace(loc, loc+1, "11").toString();
-    }
-    
-    // Set initial data to find permutations
-    private static String generateInitialAddends(final int targetSum) {
-    	StringBuilder sb = new StringBuilder();
-    	if(targetSum % 2 == 0) {
-			  for(int i = 0; i < (targetSum/2); i++) {
-				  sb.append(2);
-			  }
-			  return sb.toString();
-    	} else {
-			for(int i = 0; i < (targetSum/2); i++) {
-				sb.append(2);
-			}
-			return sb.toString() + "1";
-    	}
-    }
-    
-    // Calculates all permutations of each given addend from the generated list.
-    public static void calculatePermutation(String s) { 
-    	permutation("", s); 
-    }
-    
-    // Recursively produce permutations for given String and 
-    // add to HashSet. Size of HashSet distinguishes total number of jump
-    // combinations.
-    private static void permutation(String prefix, String s) {
-        int N = s.length();
-        if (N == 0) {
-        	permsSet.add(prefix);
-        } else {
-            for (int i = 0; i < N; i++)
-            	permutation(prefix + s.charAt(i), s.substring(0, i) + s.substring(i+1));
+    // This method is a modified version of it's derivative fibonacci recursive method.
+    // It has been modified to store already processed data within a map and retrieve that
+    // data, rather than processing data which has already been processed.
+    public static long calculateJumpCombinations(final long n) {
+    	
+    	if(n == 0) {
+			return 0l;
+		}else if(n < 0) {
+			return -1l;
+		}
+    	
+        if (map.containsKey(n)) {        	
+        	return map.get(n);
         }
 
+        long a, b;
+
+        if (map.containsKey(n - 1))
+            a = map.get(n - 1);
+        else {
+            a = calculateJumpCombinations(n - 1);
+            map.put(n - 1, a);
+        }
+
+        if (map.containsKey(n - 2))
+            b = map.get(n - 2);
+        else {
+            b = calculateJumpCombinations(n - 2);
+            map.put(n - 2, b);
+        }
+
+        return a + b;
     }
     
 }
